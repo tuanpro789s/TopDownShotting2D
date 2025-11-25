@@ -1,0 +1,64 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Player : MonoBehaviour
+{
+    public float moveSpeed = 5f;
+    public float rollBoost = 2f;
+    private float rollTime;
+    public float RollTime;
+    bool rollOnce = false;
+
+    private Rigidbody2D rb;
+    public Animator animator;
+    public SpriteRenderer characterSR;
+
+    public Vector3 moveInput;
+
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+        characterSR = GetComponent<SpriteRenderer>();
+    }
+
+    private void Update()
+    {
+        moveInput.x = Input.GetAxis("Horizontal");
+        moveInput.y = Input.GetAxis("Vertical");
+        transform.position += moveInput * moveSpeed * Time.deltaTime;
+
+        animator.SetFloat("Speed", moveInput.sqrMagnitude);
+
+        if (Input.GetKeyDown(KeyCode.Space) && rollTime <= 0)
+        {
+            animator.SetBool("Roll", true);
+            moveSpeed += rollBoost;
+            rollTime = RollTime;
+            rollOnce = true;
+        }
+
+        if (rollTime <= 0 && rollOnce == true)
+        {
+            animator.SetBool("Roll", false);
+            moveSpeed -= rollBoost;
+            rollOnce = false;
+        }
+        else
+        {
+            rollTime -= Time.deltaTime;
+        }
+
+        // Lật nhân vật dựa trên hướng di chuyển
+        if (moveInput.x != 0)
+        {
+            characterSR.flipX = moveInput.x < 0;
+        }
+    }
+    public Health playerHealth;
+    public void TakeDamage(int damage)
+    {
+        playerHealth.TakeDam(damage);
+    }
+}

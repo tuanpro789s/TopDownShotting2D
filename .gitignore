@@ -1,0 +1,20 @@
+# Unity Files
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Aa]sset[Ss]tore/
+[Ss]nipshots/
+[Pp]ackages/
+[Pp]ackage[Cc]aches/
+[Pp]layer[Ll]og*
+[Pp]layer-[Mm]onitor.log
+
+# Visual Studio / Rider
+.vs/
+.idea/
+*.csproj
+*.unityproj
+*.sln
